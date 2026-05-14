@@ -1,121 +1,96 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
+import ResumenSchrub from './docs/ResumenSchrub.jsx'
+import Home from './pages/Home.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [view, setView] = useState('home')
+  const showResumen = () => setView('resumen')
+  const showHome = () => setView('home')
+  const showEstructura = () => setView('estructura')
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Mi informe Unidad 2.</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+    <div className="app">
+      <header className="topbar">
+        <button className="brand" type="button" onClick={showHome}>
+          Informe Schrub
         </button>
-      </section>
+        <nav className="nav">
+          <button
+            className={view === 'home' ? 'nav-link active' : 'nav-link'}
+            type="button"
+            onClick={showHome}
+          >
+            Home
+          </button>
+          <button
+            className={view === 'resumen' ? 'nav-link active' : 'nav-link'}
+            type="button"
+            onClick={showResumen}
+          >
+            Resumen
+          </button>
+          <button
+            className={view === 'estructura' ? 'nav-link active' : 'nav-link'}
+            type="button"
+            onClick={showEstructura}
+          >
+            Estructura
+          </button>
+        </nav>
+      </header>
 
-      <div className="ticks"></div>
+      <main className="content">
+        {view === 'home' && (
+          <Home onShowResumen={showResumen} onShowEstructura={showEstructura} />
+        )}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {view === 'resumen' && (
+          <section className="doc-shell">
+            <aside className="doc-nav">
+              <h3>Secciones</h3>
+              <ul>
+                <li className="active">01 Resumen</li>
+                <li>02 Marco</li>
+                <li>03 Delitos</li>
+                <li>04 Comparacion</li>
+                <li>05 Responsabilidades</li>
+                <li>06 Datos</li>
+                <li>07 Conclusiones</li>
+                <li>08 Prompts</li>
+              </ul>
+            </aside>
+            <div className="doc-panel">
+              <p className="doc-meta">Actualizado · 14 may 2026</p>
+              <ResumenSchrub />
+            </div>
+          </section>
+        )}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        {view === 'estructura' && (
+          <section className="structure">
+            <h2>Estructura del informe</h2>
+            <div className="structure-grid">
+              <div>
+                <h3>Documento</h3>
+                <p>
+                  Cada archivo de docs_schrub es un componente. El markdown es la
+                  fuente de verdad.
+                </p>
+              </div>
+              <div>
+                <h3>Renderizado</h3>
+                <p>React consume el markdown y lo presenta con estilos.</p>
+              </div>
+              <div>
+                <h3>Mantenimiento</h3>
+                <p>Editar un archivo actualiza la vista sin tocar React.</p>
+              </div>
+            </div>
+          </section>
+        )}
+      </main>
+    </div>
   )
 }
 
